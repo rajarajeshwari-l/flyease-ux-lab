@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy-950: #0a1128;
+  --color-navy-900: #0f1b3c;
+  --color-navy-800: #152651;
+  --color-navy-700: #1d3466;
+  --color-navy-600: #28457f;
+
+  --color-cyan-50: #eefbfc;
+  --color-cyan-100: #d3f4f7;
+  --color-cyan-200: #a9e7ee;
+  --color-cyan-400: #3fc6d9;
+  --color-cyan-500: #1fafc4;
+  --color-cyan-600: #1590a3;
+
+  --color-neutral-25: #fafafb;
+  --color-neutral-50: #f5f6f8;
+  --color-neutral-100: #eceef1;
+  --color-neutral-200: #dde0e5;
+  --color-neutral-300: #c2c7cf;
+  --color-neutral-400: #9aa1ac;
+  --color-neutral-500: #6e7581;
+  --color-neutral-600: #4e5560;
+  --color-neutral-700: #363c46;
+  --color-neutral-800: #22262e;
+  --color-neutral-900: #14171c;
+
+  --color-success-50: #eaf8ee;
+  --color-success-200: #b7e6c4;
+  --color-success-500: #1e9e52;
+  --color-success-600: #188544;
+
+  --color-warn-50: #fff6e8;
+  --color-warn-500: #c2790c;
+  --color-warn-600: #a2650a;
+
+  --color-danger-50: #fdecec;
+  --color-danger-500: #d14343;
+  --color-danger-600: #b33333;
+
+  --shadow-card: 0 1px 2px rgba(15, 27, 60, 0.06), 0 4px 14px rgba(15, 27, 60, 0.06);
+  --shadow-pop: 0 10px 30px rgba(15, 27, 60, 0.14);
+
+  --animate-fade-in: fadeIn 0.35s ease-out;
+  --animate-slide-up: slideUp 0.4s ease-out;
+  --animate-toast-in: toastIn 0.25s ease-out;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--color-navy-900);
+  background-color: var(--color-neutral-25);
+  -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-cyan-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.animate-fadeIn { animation: var(--animate-fade-in); }
+.animate-slideUp { animation: var(--animate-slide-up); }
+.animate-toastIn { animation: var(--animate-toast-in); }
+
+/* ---- Design system component classes ----
+   NOTE: Tailwind v4 does not reliably support @apply chaining one custom
+   component class inside another, so every class below spells out its
+   full utility set directly rather than referencing .btn / .badge / .alert. */
+
+@layer components {
+  .btn,
+  .btn-primary,
+  .btn-accent,
+  .btn-secondary,
+  .btn-ghost,
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn { @apply bg-neutral-100 text-navy-900; }
+  .btn-primary { @apply bg-navy-900 text-white hover:bg-navy-800 active:bg-navy-950; }
+  .btn-accent { @apply bg-cyan-500 text-white hover:bg-cyan-600; }
+  .btn-secondary { @apply bg-white text-navy-900 border border-neutral-200 hover:bg-neutral-50; }
+  .btn-ghost { @apply bg-transparent text-navy-900 hover:bg-neutral-100; }
+  .btn-danger { @apply bg-danger-500 text-white hover:bg-danger-600; }
+
+  .input-field {
+    @apply w-full rounded-lg border border-neutral-200 bg-white px-3.5 py-2.5 text-sm text-navy-900 placeholder-neutral-400 transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500;
+  }
+  .input-field-error { @apply border-danger-500 focus:border-danger-500 focus:ring-danger-500; }
+  .label-text { @apply mb-1.5 block text-xs font-semibold text-neutral-600; }
+
+  .card { @apply rounded-2xl border border-neutral-100 bg-white shadow-[var(--shadow-card)]; }
+
+  .badge,
+  .badge-success,
+  .badge-warn,
+  .badge-danger,
+  .badge-info,
+  .badge-neutral {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+  .badge { @apply bg-neutral-100 text-neutral-600; }
+  .badge-success { @apply bg-success-50 text-success-600; }
+  .badge-warn { @apply bg-warn-50 text-warn-600; }
+  .badge-danger { @apply bg-danger-50 text-danger-600; }
+  .badge-info { @apply bg-cyan-50 text-cyan-600; }
+  .badge-neutral { @apply bg-neutral-100 text-neutral-600; }
+
+  .alert,
+  .alert-success,
+  .alert-warn,
+  .alert-danger,
+  .alert-info {
+    @apply flex items-start gap-3 rounded-xl border p-4 text-sm;
+  }
+  .alert { @apply border-neutral-200 bg-neutral-50 text-neutral-600; }
+  .alert-success { @apply border-success-500/20 bg-success-50 text-success-600; }
+  .alert-warn { @apply border-warn-500/20 bg-warn-50 text-warn-600; }
+  .alert-danger { @apply border-danger-500/20 bg-danger-50 text-danger-600; }
+  .alert-info { @apply border-cyan-500/20 bg-cyan-50 text-cyan-600; }
+
+  .section { @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8; }
+  .field-error-text { @apply mt-1 text-xs font-medium text-danger-500; }
+}
+
+.shadow-pop { box-shadow: var(--shadow-pop); }
+.shadow-card { box-shadow: var(--shadow-card); }
